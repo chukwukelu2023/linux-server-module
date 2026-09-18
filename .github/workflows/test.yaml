@@ -42,13 +42,13 @@ jobs:
       #   with:
       #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Verify Azure Login
-        run: |
-          az account show --output table
+      # - name: Verify Azure Login
+      #   run: |
+      #     az account show --output table
 
-      - name: Verify Azure CLI
-        run: |
-          az --version
+      # - name: Verify Azure CLI
+      #   run: |
+      #     az --version
 
       - name: Download Go dependencies
         working-directory: tests
