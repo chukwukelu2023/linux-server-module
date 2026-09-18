@@ -47,6 +47,7 @@ module "virtual_machine" {
   bootdiagnostic-storage-account-uri = data.azurerm_storage_account.this.primary_blob_endpoint
   custom-data                        = filebase64("${path.module}/cloud-init.yaml")
   computer-name                      = each.value.computer-name
+  tags                               = each.value.tags
 }
 
 resource "azurerm_network_security_group" "this" {

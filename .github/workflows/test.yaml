@@ -1,0 +1,67 @@
+name: VM Module Terratest
+
+on:
+  # push:
+    # branches:
+    #   - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  terratest:
+    name: Run Terratest
+    runs-on: ubuntu-latest
+
+    # env:
+    #   TF_VAR_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.0'
+          cache-dependency-path: tests/go.sum
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.16.3
+
+      - name: Verify Terraform
+        run: terraform version
+
+      - name: Azure Login
+        uses: azure/login@v3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Verify Azure Login
+        run: |
+          az account show --output table
+
+      - name: Verify Azure CLI
+        run: |
+          az --version
+
+      - name: Download Go dependencies
+        working-directory: tests
+        run: |
+          go mod download
+
+      - name: Run Go tests
+        working-directory: tests
+        env:
+        #  TF_VAR_subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+         ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          go test -v ./...

@@ -10,11 +10,18 @@ terraform {
       version = "~>1.5"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "rg-prod-test"
+    storage_account_name = "tehcoopstaging"
+    container_name       = "tfstate"
+    key                  = "linux-server-module.tfstate"
+  }
 }
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
-  subscription_id = var.subscription-id
+  # subscription_id = var.subscription-id
   features {
   }
 }

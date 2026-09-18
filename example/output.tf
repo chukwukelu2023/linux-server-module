@@ -14,3 +14,8 @@ output "vm-ssh-private-key" {
   value     = module.virtual_machine["acuop"].ssh_private_key
   sensitive = true
 }
+
+output "linux_vm" {
+  value     = module.virtual_machine["acuop"].linux_vm
+  sensitive = true
+}

@@ -18,3 +18,10 @@ output "ssh_private_key" {
   description = "The Private Key of the SSH Public Key resource. This will be null if the Admin Password is provided or a Public SSH Key is provided."
   sensitive   = true
 }
+
+
+output "linux_vm" {
+  value       = azurerm_linux_virtual_machine.this
+  description = "Azure linux vm that will be created"
+  sensitive   = true
+}
