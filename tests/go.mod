@@ -1,4 +1,4 @@
-module github.com/TEHC-Louisville/linux-server-module/tests
+module module github.com/chukwukelu2023/linux-server-module/tests
 
 go 1.26.0
 
