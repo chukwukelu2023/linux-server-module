@@ -1,7 +1,7 @@
 name: VM Module Terratest
 
 on:
-  push:
+  # push:
     # branches:
     #   - main
   pull_request:
@@ -32,7 +32,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.13.3
+          terraform_version: 1.16.3
 
       - name: Verify Terraform
         run: terraform version
@@ -57,5 +57,7 @@ jobs:
 
       - name: Run Go tests
         working-directory: tests
+        env:
+         TF_VAR_subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: |
           go test -v ./...
