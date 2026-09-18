@@ -74,24 +74,13 @@ func setAzureEnvFromCLI(t *testing.T) {
 	}
 
 	// Get the default subscription ID
-	// subID := getValue("az", "account", "show", "--query", "id", "-o", "tsv")
-	// tenantID := getValue("az", "account", "show", "--query", "tenantId", "-o", "tsv")
+	subID := getValue("az", "account", "show", "--query", "id", "-o", "tsv")
+	tenantID := getValue("az", "account", "show", "--query", "tenantId", "-o", "tsv")
 
 	// Set required env vars for Terratest
-	// os.Setenv("ARM_SUBSCRIPTION_ID", subID)
-	// os.Setenv("ARM_TENANT_ID", tenantID)
+	os.Setenv("ARM_SUBSCRIPTION_ID", subID)
+	os.Setenv("ARM_TENANT_ID", tenantID)
 
-	// set sub and tenand Is as environment variables
-	subID := os.Getenv("ARM_SUBSCRIPTION_ID")
-	tenantID := os.Getenv("ARM_TENANT_ID")
-
-	if subID == "" {
-		t.Fatal("ARM_SUBSCRIPTION_ID is not set")
-	}
-
-	if tenantID == "" {
-		t.Fatal("ARM_TENANT_ID is not set")
-	}
 }
 
 func TestAzureLinuxVirtualMachine(t *testing.T) {
