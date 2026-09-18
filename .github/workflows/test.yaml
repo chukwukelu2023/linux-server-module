@@ -26,7 +26,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25.4'
+          go-version: '1.26.0'
           cache-dependency-path: tests/go.sum
 
       - name: Setup Terraform

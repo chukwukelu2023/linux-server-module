@@ -1,4 +1,4 @@
-module module github.com/chukwukelu2023/linux-server-module/tests
+module github.com/chukwukelu2023/linux-server-module/tests
 
 go 1.26.0
 
