@@ -2,8 +2,8 @@ name: VM Module Terratest
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
   pull_request:
     branches:
       - main
@@ -16,6 +16,9 @@ jobs:
     name: Run Terratest
     runs-on: ubuntu-latest
 
+    env:
+      TF_VAR_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,6 +28,14 @@ jobs:
         with:
           go-version: '1.25.4'
           cache-dependency-path: tests/go.sum
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.13.3
+
+      - name: Verify Terraform
+        run: terraform version
 
       - name: Azure Login
         uses: azure/login@v3

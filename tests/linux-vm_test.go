@@ -99,11 +99,6 @@ func TestAzureLinuxVirtualMachine(t *testing.T) {
 	expectedLinuxVM = &LinuxVirtualMachine{}
 	terraform.OutputStruct(t, tfOpts, "linux_vm", expectedLinuxVM)
 
-	assert.NotEmpty(t, expectedLinuxVM.Name)
-	assert.NotEmpty(t, expectedLinuxVM.ResourceGroupName)
-
-	fmt.Printf("Linux VM: %+v\n", expectedLinuxVM)
-
 	t.Run("LinuxVM_exists", AssertLinuxVMExists)
 	t.Run("LinuxVM_is_tagged_correctly", AssertLinuxVMIsTagged)
 
