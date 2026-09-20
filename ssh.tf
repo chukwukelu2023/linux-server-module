@@ -1,5 +1,5 @@
 resource "azapi_resource" "ssh_public_key" {
-  count     = var.admin-password == null || var.public-ssh-key == null ? 1 : 0
+  count     = var.admin-password == null && var.public-ssh-key == null ? 1 : 0
   type      = var.ssh-key-type
   name      = "${local.name}-ssh-key"
   location  = var.vm-location
@@ -7,7 +7,7 @@ resource "azapi_resource" "ssh_public_key" {
 }
 
 resource "azapi_resource_action" "ssh_public_key_gen" {
-  count       = var.admin-password == null || var.public-ssh-key == null ? 1 : 0
+  count       = var.admin-password == null && var.public-ssh-key == null ? 1 : 0
   type        = var.ssh-key-type
   resource_id = azapi_resource.ssh_public_key[0].id
   action      = var.ssh-key-action
